@@ -1,0 +1,364 @@
+:root{
+  --paper: #f2ecdc;
+  --paper-dark: #e8dfc7;
+  --ink: #24304a;
+  --ink-soft: #5a6478;
+  --line: #c9bfa0;
+  --income: #4c6444;
+  --income-bg: #e4e9dc;
+  --expense: #9c3d34;
+  --expense-bg: #ecdfd8;
+  --gold: #a8802f;
+  --stamp: #9c3d34;
+  --radius: 4px;
+}
+
+* { box-sizing: border-box; }
+
+body{
+  margin:0;
+  background: var(--paper);
+  background-image:
+    linear-gradient(var(--paper-dark) 1px, transparent 1px);
+  background-size: 100% 2.1em;
+  color: var(--ink);
+  font-family: 'Noto Sans Thai', sans-serif;
+  padding: 2.5rem 1.25rem 4rem;
+  min-height: 100vh;
+}
+
+.wrap{
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+header{
+  display:flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-bottom: 3px double var(--ink);
+  padding-bottom: 0.85rem;
+  margin-bottom: 1.75rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.titleblock .eyebrow{
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+}
+
+h1{
+  font-family: 'Noto Serif Thai', serif;
+  font-size: 1.9rem;
+  margin: 0.1rem 0 0;
+  font-weight: 700;
+}
+
+.date-stamp{
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  text-align:right;
+  line-height: 1.5;
+}
+
+/* Deposit slip / entry form */
+.slip{
+  background: #fbf8ee;
+  border: 1px solid var(--line);
+  box-shadow: 3px 3px 0 rgba(36,48,74,0.08);
+  padding: 1.4rem 1.4rem 1.2rem;
+  margin-bottom: 2rem;
+  position: relative;
+}
+.slip::before{
+  content: "รายการใหม่";
+  position: absolute;
+  top: -0.7rem;
+  left: 1.2rem;
+  background: var(--paper);
+  padding: 0 0.6rem;
+  font-family: 'Noto Serif Thai', serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--ink);
+}
+
+.toggle-row{
+  display:flex;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+.toggle-row input{ display:none; }
+.toggle-row label{
+  flex:1;
+  text-align:center;
+  padding: 0.55rem 0.5rem;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  cursor:pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  transition: all .15s ease;
+  user-select:none;
+}
+.toggle-row input:checked + label.lbl-income{
+  background: var(--income-bg);
+  border-color: var(--income);
+  color: var(--income);
+}
+.toggle-row input:checked + label.lbl-expense{
+  background: var(--expense-bg);
+  border-color: var(--expense);
+  color: var(--expense);
+}
+
+.field-grid{
+  display:grid;
+  grid-template-columns: 2fr 1.2fr 1fr;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+@media (max-width: 600px){
+  .field-grid{ grid-template-columns: 1fr; }
+}
+
+.field label{
+  display:block;
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  letter-spacing: 0.05em;
+  margin-bottom: 0.3rem;
+}
+.field input, .field select{
+  width:100%;
+  padding: 0.55rem 0.6rem;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  background: #fff;
+  font-family: inherit;
+  font-size: 0.92rem;
+  color: var(--ink);
+}
+.field input:focus, .field select:focus{
+  outline: 2px solid var(--gold);
+  outline-offset: 1px;
+}
+
+.add-btn{
+  width:100%;
+  padding: 0.7rem;
+  background: var(--ink);
+  color: var(--paper);
+  border: none;
+  border-radius: var(--radius);
+  font-family: 'Noto Sans Thai', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor:pointer;
+  letter-spacing: 0.03em;
+  transition: transform .1s ease, background .15s ease;
+}
+.add-btn:hover{ background: #14203a; }
+.add-btn:active{ transform: scale(0.99); }
+
+.err-msg{
+  color: var(--expense);
+  font-size: 0.8rem;
+  margin: -0.5rem 0 0.8rem;
+  min-height: 1.1em;
+}
+
+/* Search bar */
+.search-row{
+  display:flex;
+  align-items:center;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+  border-bottom: 1.5px dashed var(--line);
+  padding-bottom: 1rem;
+}
+.search-row input{
+  flex:1;
+  padding: 0.55rem 0.8rem;
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  background: #fff;
+}
+.search-row input:focus{
+  outline: 2px solid var(--gold);
+  outline-offset: 1px;
+}
+.search-row .count{
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+/* Ledger table */
+.ledger-title{
+  font-family: 'Noto Serif Thai', serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 0 0 0.75rem;
+}
+
+.ledger{
+  width:100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+  margin-bottom: 1.5rem;
+}
+.ledger th{
+  text-align:left;
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  border-bottom: 2px solid var(--ink);
+  padding: 0.4rem 0.5rem;
+}
+.ledger td{
+  padding: 0.55rem 0.5rem;
+  border-bottom: 1px solid var(--line);
+  vertical-align: middle;
+}
+.ledger tr:hover td{ background: rgba(168,128,47,0.06); }
+.col-id{ color: var(--ink-soft); font-variant-numeric: tabular-nums; width: 2.5rem;}
+.col-amt{ text-align:right; font-variant-numeric: tabular-nums; font-weight:600; white-space:nowrap;}
+.amt-income{ color: var(--income); }
+.amt-expense{ color: var(--expense); }
+.cat-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:0.3rem;
+  font-size: 0.78rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  background: var(--paper-dark);
+  color: var(--ink);
+  white-space:nowrap;
+}
+.type-tag{
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.1rem 0.45rem;
+  border-radius: 3px;
+}
+.type-income{ background: var(--income-bg); color: var(--income); }
+.type-expense{ background: var(--expense-bg); color: var(--expense); }
+
+.empty-row td{
+  text-align:center;
+  color: var(--ink-soft);
+  padding: 1.6rem 0.5rem;
+  font-style: italic;
+}
+
+/* Summary */
+.summary{
+  display:grid;
+  grid-template-columns: 1fr 1fr 1.1fr;
+  gap: 0.9rem;
+  margin-bottom: 2rem;
+}
+@media (max-width: 600px){
+  .summary{ grid-template-columns: 1fr; }
+}
+.sum-card{
+  border: 1.5px solid var(--line);
+  background: #fbf8ee;
+  padding: 0.9rem 1rem;
+  border-radius: var(--radius);
+}
+.sum-card .lbl{
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.sum-card .val{
+  font-family: 'Noto Serif Thai', serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin-top: 0.15rem;
+}
+.sum-card.income .val{ color: var(--income); }
+.sum-card.expense .val{ color: var(--expense); }
+
+.sum-card.net{
+  position: relative;
+  display:flex;
+  align-items:center;
+  justify-content: center;
+  text-align:center;
+  background: transparent;
+  border: none;
+}
+.stamp-circle{
+  width: 100%;
+  height: 100%;
+  min-height: 88px;
+  border: 3px solid var(--stamp);
+  border-radius: 8px;
+  color: var(--stamp);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  transform: rotate(-2deg);
+  position:relative;
+}
+.stamp-circle.positive{ border-color: var(--income); color: var(--income); }
+.stamp-circle .lbl{
+  font-size: 0.68rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+.stamp-circle .val{
+  font-family: 'Noto Serif Thai', serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-top: 0.1rem;
+}
+
+/* Clear all */
+.clear-wrap{
+  text-align:center;
+  border-top: 1.5px dashed var(--line);
+  padding-top: 1.5rem;
+}
+.clear-btn{
+  background: transparent;
+  border: 1.5px solid var(--expense);
+  color: var(--expense);
+  padding: 0.6rem 1.3rem;
+  border-radius: 999px;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor:pointer;
+  transition: all .15s ease;
+}
+.clear-btn:hover{
+  background: var(--expense);
+  color: #fff;
+}
+
+footer{
+  text-align:center;
+  margin-top: 2.5rem;
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  letter-spacing: 0.04em;
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{ transition: none !important; }
+}

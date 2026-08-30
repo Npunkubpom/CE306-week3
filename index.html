@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>สมุดบัญชี — บันทึกรายรับรายจ่าย</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Thai:wght@500;600;700&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="titleblock">
+      <div class="eyebrow">Personal Ledger</div>
+      <h1>สมุดบัญชีรายรับ-รายจ่าย</h1>
+    </div>
+    <div class="date-stamp" id="todayStamp"></div>
+  </header>
+
+  <div class="slip">
+    <div class="toggle-row">
+      <input type="radio" name="txType" id="typeIncome" value="income">
+      <label for="typeIncome" class="lbl-income">💰 รายรับ</label>
+      <input type="radio" name="txType" id="typeExpense" value="expense" checked>
+      <label for="typeExpense" class="lbl-expense">🧾 รายจ่าย</label>
+    </div>
+
+    <div class="field-grid">
+      <div class="field">
+        <label for="txName">ชื่อรายการ</label>
+        <input type="text" id="txName" placeholder="เช่น ข้าวมันไก่, ค่าแท็กซี่">
+      </div>
+      <div class="field">
+        <label for="txCategory">หมวดหมู่</label>
+        <select id="txCategory">
+          <option value="food">🍜 อาหาร</option>
+          <option value="travel">🚗 เดินทาง</option>
+          <option value="shopping">🛍️ ช้อปปิ้ง</option>
+          <option value="salary">💵 เงินเดือน</option>
+          <option value="other">📦 อื่นๆ</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="txAmount">จำนวนเงิน (฿)</label>
+        <input type="number" id="txAmount" placeholder="0.00" min="0" step="0.01">
+      </div>
+    </div>
+
+    <div class="err-msg" id="errMsg"></div>
+
+    <button class="add-btn" id="addBtn">+ บันทึกรายการ</button>
+  </div>
+
+  <div class="search-row">
+    <input type="text" id="searchInput" placeholder="🔍 ค้นหารายการตามชื่อ...">
+    <span class="count" id="resultCount"></span>
+  </div>
+
+  <div class="ledger-title">ประวัติรายการทั้งหมด</div>
+  <table class="ledger">
+    <thead>
+      <tr>
+        <th class="col-id">ลำดับ</th>
+        <th>ประเภท</th>
+        <th>ชื่อรายการ</th>
+        <th>หมวดหมู่</th>
+        <th class="col-amt">จำนวนเงิน</th>
+      </tr>
+    </thead>
+    <tbody id="ledgerBody">
+      <!-- rows injected here -->
+    </tbody>
+  </table>
+
+  <div class="summary">
+    <div class="sum-card income">
+      <div class="lbl">ยอดรายรับรวม</div>
+      <div class="val" id="totalIncome">฿0.00</div>
+    </div>
+    <div class="sum-card expense">
+      <div class="lbl">ยอดรายจ่ายรวม</div>
+      <div class="val" id="totalExpense">฿0.00</div>
+    </div>
+    <div class="sum-card net">
+      <div class="stamp-circle" id="netStampCircle">
+        <div class="lbl">คงเหลือสุทธิ</div>
+        <div class="val" id="netBalance">฿0.00</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="clear-wrap">
+    <button class="clear-btn" id="clearBtn">ล้างข้อมูลทั้งหมด</button>
+  </div>
+
+  <footer>ทุกรายการถูกเก็บไว้ในหน่วยความจำของหน้านี้เท่านั้น รีเฟรชหน้าแล้วข้อมูลจะหายไป</footer>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
